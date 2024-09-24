@@ -1,0 +1,155 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #e5ddd5;
+    direction: rtl;
+}
+
+/* Header */
+.header {
+    background-color: #075e54;
+    color: white;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header i {
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+.header h1 {
+    font-size: 24px;
+}
+
+.header-icons i {
+    font-size: 20px;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+/* Tabs */
+.tabs {
+    background-color: #128c7e;
+    display: flex;
+    justify-content: space-around;
+    color: white;
+    padding: 10px 0;
+}
+
+.tab {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.tab.active {
+    border-bottom: 3px solid white;
+}
+
+/* Chat List */
+.chat-list {
+    background-color: white;
+    padding: 10px 0;
+}
+
+.chat-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+}
+
+.chat-item:hover {
+    background-color: #f5f5f5;
+}
+
+.chat-img {
+    width: 5px;
+    height: 5px;
+    border-radius: 5%;
+    margin-left: 15px;
+}
+
+.chat-info {
+    flex-grow: 1;
+}
+
+.chat-info h4 {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.chat-info p {
+    font-size: 14px;
+    color: gray;
+}
+
+.chat-time {
+    color: gray;
+    font-size: 12px;
+}
+
+.casing {
+
+    background-color: blue;
+    box-shadow: #128c7e;
+}
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Cover Section */
+.cover-container {
+    height: 100vh;
+    background: url('cover-image.jpg') no-repeat center center/cover; /* Replace with your image */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.cover-content h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.cover-content p {
+    font-size: 1.5rem;
+    margin-bottom:
+
+
+/* Floating Action Button */
+.fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25d366;
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}

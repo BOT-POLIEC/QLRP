@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Military Login with Searchable Registers</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .login-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin: 0 auto;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="search"],
+        input[type="number"] {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="button"] {
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="button"]:hover {
+            background-color: #218838;
+        }
+
+        .nav-container {
+            margin: 20px 0;
+        }
+
+        .nav-container button {
+            margin: 5px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .nav-container button:hover {
+            background-color: #0056b3;
+        }
+
+        .section {
+            display: none;
+            margin-top: 50px;
+        }
+
+        .record,
+        .equipment-item {
+            background-color: #eaeaea;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 10px 0;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .record img,
+        .equipment-item img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            margin-right: 20px;
+        }
+
+        .record-details,
+        .equipment-details {
+            flex: 1;
+        }
+
+        .record-details h3,
+        .equipment-details h3 {
+            margin: 0;
+            padding: 0;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .record-details p,
+        .equipment-details p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .edit-button {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background-color: #ffc107;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .edit-button:hover {
+            background-color: #e0a800;
+        }
+
+        .form-container {
+            display: none;
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 20px auto;
+            text-align: left;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="number"] {
+            width: calc(100% - 22px);
+        }
+
+        .form-container input[type="button"] {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .form-container input[type="button"]:hover {
+            background-color: #0056b3;
+        }
+
+        .military-box {
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 10px;
+            color: #333;
+            font-size: 0.9em;
+        }
+
+        /* Application Form Styles */
+        #applicationFormContainer {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 20px auto;
+            text-align: right;
+
+        }
+
+        #applicationFormContainer textarea {
+            width: calc(100% - 22px);
+        }
+
+
+        /* General Styles */
+.body1 {
+    font-family: 'Arial', sans-serif;
+    background-image: url('background.jpg'); /* Add your background image */
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 275px;
+    background-color: rgba(226, 226, 226, 0.85); /* Semi-transparent background */
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+input[type="text"], input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.button1 {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button1:hover {
+    background-color: #0056b3;
+}
+
+.hidden {
+    display: none;
+}
+
+#personnelList {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+#personnelList li  {
+    padding: 10px;
+    border-bottom: 1px solid #000000;
+    font-size: 16px;
+    color: #333;
+}
+
+#personnelList li:last-child {
+    border-bottom: none;
+}
+
+#logoutButton {
+    margin-top: 20px;
+    background-color: #dc3545;
+}
+
+#logoutButton:hover {
+    background-color: #c82333;
+}
+
+
+
+
+        /* General Page Styling */
+        .body5 {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .container5 {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section5 {
+            background-color: #fff;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section5 h2 {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .section5 button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .section5 button:hover {
+            background-color: #45a049;
+        }
+
+        .records5-list {
+            margin-top: 10px;
+        }
+
+        .record5 {
+            background-color: #e7f3fe;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .record5 div {
+            flex-grow: 1;
+        }
+
+        .record5 img {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        .form-container5 {
+            display: none;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            width: 300px;
+        }
+
+        .form-container5 h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .form-container5 input,
+        .form-container5 textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-container5 button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        .form-container5 button:hover {
+            background-color: #45a049;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            z-index: 999;
+        }
+
+
+
+         .button-small {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .button-small {
+            background-color: #3e8e41;
+        }
+
+        .icon {
+            margin-right: 10px;
+        }
+
+
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .button-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .button-container button {
+            margin: 5px;
+            padding: 10px 15px;
+        }
+        #formContainer {
+            display: none;
+            text-align: center;
+        }
+        #successMessage {
+            color: green;
+            text-align: center;
+            display: none;
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Login Form -->
+    <div class="login-container" id="loginContainer">
+        <h2>Military Login</h2>
+        <input type="text" id="username" placeholder="Username"><br>
+        <input type="password" id="password" placeholder="Password"><br>
+        <input type="button" value="Login" id="loginButton">
+    </div>
+
+    <!-- Navigation and Sections -->
+    <div class="nav-container" id="navContainer" style="display:none;">
+        <button onclick="showSection('citizens')">Citizen Records</button>
+        <button onclick="showSection('police')">Police Personnel</button>
+        <button onclick="showSection('prison')">Prison Register</button>
+        <button onclick="showSection('equipment')">Military Equipment</button>
+        <input type="search" id="searchInput" placeholder="Search by name...">
+        <input type="button" value="Search" onclick="searchRecords()">
+    </div>
+
+    <!-- Citizen Records -->
+    <div class="section" id="citizensSection">
+        <h2>Citizen Records</h2>
+        <div id="citizensList"></div>
+    </div>
+
+    <!-- Police Personnel -->
+    <div class="section" id="policeSection">
+        <h2>Police Personnel</h2>
+        <div id="policeList"></div>
+    </div>
+
+    <!-- Prison Register -->
+    <div class="section" id="prisonSection">
+        <h2>Prison Register</h2>
+        <div id="prisonList"></div>
+    </div>
+
+    <!-- Military Equipment -->
+    <div class="section" id="equipmentSection">
+        <h2>Military Equipment</h2>
+        <div id="equipmentList"></div>
+    </div>
+
+    <!-- Form Container -->
+    <div class="form-container" id="formContainer">
+        <h3 id="formTitle">Add/Edit Record</h3>
+        <input type="text" id="formName" placeholder="Name"><br>
+        <input type="text" id="formPhoto" placeholder="Photo URL"><br>
+        <input type="text" id="formInfo" placeholder="Info"><br>
+        <input type="text" id="formExtra" placeholder="Additional Details"><br>
+        <input type="text" id="formMilitaryName" placeholder="Military Name"><br> <!-- New field for military name -->
+        <input type="button" value="Save" onclick="saveRecord()">
+        <input type="button" value="Cancel" onclick="closeForm()">
+    </div>
+
+
+        <div id="loginSection">
+        </div>
+
+        <div id="personnelSection" class="hidden">
+                <div class="container">
+            <h1>Poliec List</h1>
+            <ul id="personnelList">
+                <!-- Personnel list will be populated here -->
+            </ul>
+            <button class="button1" id="logoutButton">Logout</button>
+        </div>
+    </div>
+
+
+
+    <h1>Police Registry System</h1>
+
+    <div class="button-container">
+        <button id="addCitizenBtn">Add Citizen</button>
+        <button id="addPolicemanBtn">Add Policeman</button>
+        <button id="addPrisonerBtn">Add Prisoner</button>
+        <button id="addEquipmentBtn">Add Equipment</button>
+        <button id="addMeBtn">Add Me</button>
+    </div>
+
+    <div id="formContainer">
+        <!-- Dynamic Form will be injected here -->
+    </div>
+
+    <div id="successMessage">
+        Record added successfully!
+    </div>
+
+
+    <script>
+        // Sample users and records data
+        const users = {
+            '1': '1'
+        };
+
+        let citizens = [
+            { name: 'Citizen 1', photo: 'https://via.placeholder.com/100', personalInfo: 'Age: 30, Occupation: Engineer', property: 'House: 123 Main St, Car: Toyota Camry' },
+            { name: 'Citizen 2', photo: 'https://via.placeholder.com/100', personalInfo: 'Age: 25, Occupation: Teacher', property: 'Apartment: 456 Elm St, Bike: Yamaha R1' }
+            
+        ];
+
+        let policePersonnel = [
+            { name: 'Officer 1', photo: 'https://via.placeholder.com/100', rank: 'Sergeant', station: 'Central Police Station' },
+            { name: 'Officer 2', photo: 'https://via.placeholder.com/100', rank: 'Detective', station: 'East Police Station' }
+        ];
+
+        let prisonRegister = [
+            { name: 'Prisoner 1', photo: 'https://via.placeholder.com/100', crime: 'Theft', sentence: '2 years', facility: 'State Prison' },
+            { name: 'Prisoner 2', photo: 'https://via.placeholder.com/100', crime: 'Fraud', sentence: '5 years', facility: 'Federal Prison' }
+        ];
+
+        let militaryEquipment = [
+            { name: 'Tank A1', photo: 'https://via.placeholder.com/100', type: 'Armored Vehicle', status: 'Operational' },
+            { name: 'Helicopter B2', photo: 'https://via.placeholder.com/100', type: 'Aircraft', status: 'In Maintenance' }
+        ];
+
+        let editingRecord = null;
+
+        document.getElementById('loginButton').addEventListener('click', validateLogin);
+
+        function validateLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (users[username] && users[username] === password) {
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('navContainer').style.display = 'block';
+                showSection('citizens');
+            } else {
+                alert('Invalid username or password.');
+            }
+        }
+
+        function showSection(section) {
+            currentSection = section;
+            document.querySelectorAll('.section').forEach(el => el.style.display = 'none');
+            document.getElementById(section + 'Section').style.display = 'block';
+            displayRecords(section);
+        }
+
+        function displayRecords(section) {
+            let listContainer = document.getElementById(section + 'List');
+            listContainer.innerHTML = '';
+
+            let records = getRecordsBySection(section);
+
+            records.forEach((record, index) => {
+                let recordElement = document.createElement('div');
+                recordElement.className = section === 'equipment' ? 'equipment-item' : 'record';
+
+                let recordHtml = `<img src="${record.photo}" alt="${record.name}">`;
+                recordHtml += `<div class="${section === 'equipment' ? 'equipment-details' : 'record-details'}">`;
+                recordHtml += `<h3>${record.name}</h3>`;
+                recordHtml += `<p>${section === 'citizens' ? record.personalInfo + '<br>' + record.property : section === 'police' ? record.rank + '<br>' + record.station : section === 'prison' ? record.crime + '<br>' + record.sentence + '<br>' + record.facility : record.type + '<br>' + record.status}</p>`;
+                if (section !== 'equipment') {
+                    recordHtml += `<div class="military-box">Military Name: ${record.militaryName || 'N/A'}</div>`; // Military name box
+                }
+                recordHtml += `</div>`;
+                recordHtml += `<button class="edit-button" onclick="editRecord('${section}', ${index})">Edit</button>`;
+
+                recordElement.innerHTML = recordHtml;
+                listContainer.appendChild(recordElement);
+            });
+        }
+
+        function editRecord(section, index) {
+            editingRecord = { section, index };
+
+            const record = getRecordsBySection(section)[index];
+
+            document.getElementById('formTitle').innerText = 'Edit Record';
+            document.getElementById('formName').value = record.name;
+            document.getElementById('formPhoto').value = record.photo;
+            document.getElementById('formInfo').value = section === 'citizens' ? record.personalInfo : section === 'police' ? record.rank : section === 'prison' ? record.crime : record.type;
+            document.getElementById('formExtra').value = section === 'citizens' ? record.property : section === 'police' ? record.station : section === 'prison' ? record.sentence + ', ' + record.facility : record.status;
+            document.getElementById('formMilitaryName').value = record.militaryName || '';
+
+            document.getElementById('formContainer').style.display = 'block';
+        }
+
+        function closeForm() {
+            document.getElementById('formContainer').style.display = 'none';
+            editingRecord = null;
+        }
+
+        function saveRecord() {
+            const section = editingRecord.section;
+            const index = editingRecord.index;
+
+            const record = getRecordsBySection(section)[index];
+            record.name = document.getElementById('formName').value;
+            record.photo = document.getElementById('formPhoto').value;
+            if (section === 'citizens') {
+                record.personalInfo = document.getElementById('formInfo').value;
+                record.property = document.getElementById('formExtra').value;
+            } else if (section === 'police') {
+                record.rank = document.getElementById('formInfo').value;
+                record.station = document.getElementById('formExtra').value;
+            } else if (section === 'prison') {
+                record.crime = document.getElementById('formInfo').value;
+                record.sentence = document.getElementById('formExtra').value.split(', ')[0];
+                record.facility = document.getElementById('formExtra').value.split(', ')[1];
+            } else if (section === 'equipment') {
+                record.type = document.getElementById('formInfo').value;
+                record.status = document.getElementById('formExtra').value;
+            }
+            record.militaryName = document.getElementById('formMilitaryName').value;
+
+            saveToLocalStorage(section, getRecordsBySection(section));
+
+            closeForm();
+            displayRecords(section);
+        }
+
+        function searchRecords() {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+
+            ['citizens', 'police', 'prison', 'equipment'].forEach(section => {
+                const records = getRecordsBySection(section);
+                const filteredRecords = records.filter(record => record.name.toLowerCase().includes(searchQuery));
+                if (filteredRecords.length > 0) {
+                    document.getElementById(section + 'Section').style.display = 'block';
+                    const listContainer = document.getElementById(section + 'List');
+                    listContainer.innerHTML = '';
+
+                    filteredRecords.forEach(record => {
+                        let recordElement = document.createElement('div');
+                        recordElement.className = section === 'equipment' ? 'equipment-item' : 'record';
+
+                        let recordHtml = `<img src="${record.photo}" alt="${record.name}">`;
+                        recordHtml += `<div class="${section === 'equipment' ? 'equipment-details' : 'record-details'}">`;
+                        recordHtml += `<h3>${record.name}</h3>`;
+                        recordHtml += `<p>${section === 'citizens' ? record.personalInfo + '<br>' + record.property : section === 'police' ? record.rank + '<br>' + record.station : section === 'prison' ? record.crime + '<br>' + record.sentence + '<br>' + record.facility : record.type + '<br>' + record.status}</p>`;
+                        if (section !== 'equipment') {
+                            recordHtml += `<div class="military-box">Military Name: ${record.militaryName || 'N/A'}</div>`; // Military name box
+                        }
+                        recordHtml += `</div>`;
+                        listContainer.appendChild(recordElement);
+                    });
+                } else {
+                    document.getElementById(section + 'Section').style.display = 'none';
+                }
+            });
+        }
+
+        function getRecordsBySection(section) {
+            return section === 'citizens' ? citizens : section === 'police' ? policePersonnel : section === 'prison' ? prisonRegister : militaryEquipment;
+        }
+
+        function saveToLocalStorage(key, data) {
+            localStorage.setItem(key, JSON.stringify(data));
+        }
+
+        function loadFromLocalStorage() {
+            const citizenData = localStorage.getItem('citizens');
+            if (citizenData) citizens = JSON.parse(citizenData);
+
+            const policeData = localStorage.getItem('police');
+            if (policeData) policePersonnel = JSON.parse(policeData);
+
+            const prisonData = localStorage.getItem('prison');
+            if (prisonData) prisonRegister = JSON.parse(prisonData);
+
+            const equipmentData = localStorage.getItem('equipment');
+            if (equipmentData) militaryEquipment = JSON.parse(equipmentData);
+        }
+
+        loadFromLocalStorage();
+
+
+        // Sample personnel data
+const personnel = [
+    { id: 1, name: "John Doe" },
+    { id: 2, name: "Jane Smith" },
+    { id: 3, name: "Michael Johnson" },
+    { id: 4, name: "Emily Davis" },
+    { id: 5, name: "ChatGPT User" } // Adding your name to the list
+];
+
+// Function to populate the personnel list
+function populatePersonnelList() {
+    const personnelList = document.getElementById('personnelList');
+    personnelList.innerHTML = ''; // Clear any existing list items
+    personnel.forEach(person => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${person.id}: ${person.name}`;
+        personnelList.appendChild(listItem);
+    });
+}
+
+// Function to handle login
+function handleLogin() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    if (username === "1" && password === "1") { // Example credentials
+        document.getElementById('loginSection').classList.add('hidden');
+        document.getElementById('personnelSection').classList.remove('hidden');
+        populatePersonnelList();
+    } else {
+        alert("Incorrect username or password!");
+    }
+}
+
+// Function to handle logout
+function handleLogout() {
+    document.getElementById('personnelSection').classList.add('hidden');
+    document.getElementById('loginSection').classList.remove('hidden');
+}
+
+// Attach event listeners
+document.getElementById('loginButton').addEventListener('click', handleLogin);
+document.getElementById('logoutButton').addEventListener('click', handleLogout);
+
+
+
+
+document.getElementById('addCitizenBtn').addEventListener('click', function() {
+    showForm('citizen');
+});
+
+document.getElementById('addPolicemanBtn').addEventListener('click', function() {
+    showForm('policeman');
+});
+
+document.getElementById('addPrisonerBtn').addEventListener('click', function() {
+    showForm('prisoner');
+});
+
+document.getElementById('addEquipmentBtn').addEventListener('click', function() {
+    showForm('equipment');
+});
+
+document.getElementById('addMeBtn').addEventListener('click', function() {
+    showForm('policeman', { name: "Your Name", id: "Your ID" });
+});
+
+function showForm(type, data = {}) {
+    const formContainer = document.getElementById('formContainer');
+    formContainer.style.display = 'block';
+    formContainer.innerHTML = '';
+
+    let formHtml = '';
+
+    switch (type) {
+        case 'citizen':
+            formHtml = `
+                <h2>Add Citizen</h2>
+                <label for="citizenName">Name:</label>
+                <input type="text" id="citizenName">
+                <label for="citizenID">ID:</label>
+                <input type="text" id="citizenID">
+                <button onclick="submitForm('citizen')">Submit</button>
+            `;
+            break;
+        case 'policeman':
+            formHtml = `
+                <h2>Add Policeman</h2>
+                <label for="policemanName">Name:</label>
+                <input type="text" id="policemanName" value="${data.name || ''}">
+                <label for="policemanID">ID:</label>
+                <input type="text" id="policemanID" value="${data.id || ''}">
+                <button onclick="submitForm('policeman')">Submit</button>
+            `;
+            break;
+        case 'prisoner':
+            formHtml = `
+                <h2>Add Prisoner</h2>
+                <label for="prisonerName">Name:</label>
+                <input type="text" id="prisonerName">
+                <label for="prisonerID">ID:</label>
+                <input type="text" id="prisonerID">
+                <button onclick="submitForm('prisoner')">Submit</button>
+            `;
+            break;
+        case 'equipment':
+            formHtml = `
+                <h2>Add Equipment</h2>
+                <label for="equipmentName">Name:</label>
+                <input type="text" id="equipmentName">
+                <label for="equipmentID">ID:</label>
+                <input type="text" id="equipmentID">
+                <button onclick="submitForm('equipment')">Submit</button>
+            `;
+            break;
+    }
+
+    formContainer.innerHTML = formHtml;
+}
+
+function submitForm(type) {
+    const name = document.getElementById(`${type}Name`).value;
+    const id = document.getElementById(`${type}ID`).value;
+
+    if (name && id) {
+        // Replace this with actual logic to save the data, e.g., an API call
+        console.log(`Submitted ${type}: Name=${name}, ID=${id}`);
+        
+        // Show success message
+        document.getElementById('successMessage').style.display = 'block';
+        
+        // Hide form after submission
+        setTimeout(() => {
+            document.getElementById('formContainer').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }, 2000);
+    } else {
+        alert("Please fill out all fields.");
+    }
+}
+
+
+
+
+
+    </script>
+</body>
+
+</html>
+
+
+
+
